@@ -1,0 +1,31 @@
+class Solution {
+private:
+    void dfs(int sr,int sc,int color,vector<vector<int>>& newi,vector<vector<int>>& image,int inc,int delr[],int delc[])    {
+        int n=image.size();
+        int m=image[0].size();
+        newi[sr][sc]=color;
+        for(int i=0;i<4;i++){
+            int newr=sr+delr[i];
+            int newc=sc+delc[i];
+            //check validity
+            if(newr>=0 && newr<n && newc>=0 && newc<m && image[newr][newc]==inc && newi[newr][newc]!=color){
+                 dfs(newr,newc,color,newi,image,inc,delr,delc);
+
+            }
+        }
+       
+        
+    }
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int n=image.size();
+        int m=image[0].size();
+        int inc=image[sr][sc];
+        vector<vector<int>>newi=image;
+        int delr[]={-1,0,1,0};
+        int delc[]={0,1,0,-1};
+
+        dfs(sr,sc,color,newi,image,inc,delr,delc);
+        return newi;
+    }
+};
